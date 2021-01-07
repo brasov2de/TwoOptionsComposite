@@ -1,7 +1,11 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { ITwoOptionsCards, ITwoOptionsProperties, TwoOptionsCompositeControl } from "./TwoOptionsCompositeControl";
 
 export class TwoOptionsComposite implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
+	private container: HTMLDivElement;
 	/**
 	 * Empty constructor.
 	 */
@@ -9,6 +13,41 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	{
 
 	}
+
+	private renderControl(context: ComponentFramework.Context<IInputs>) : void {		
+	/*	const inputs = [context.parameters.input1, context.parameters.input2, context.parameters.input3, context.parameters.input4, context.parameters.input5, context.parameters.input6];
+		const backgroundColors = (context.parameters.backgroundColor?.raw || "").split(";");
+		const textColors = (context.parameters.textColor?.raw || "").split(";");
+		const suffixes = (context.parameters.suffix?.raw || "").split(";");
+		const icons = (context.parameters.icons?.raw || "").split(";");
+
+		const numberCards = inputs.filter((numberCard) => numberCard!=null && numberCard.type!=null).map((numberCard, index) => {
+			return {
+				value : numberCard?.formatted || "",
+				backgroundColor: backgroundColors[index] || "gray",
+				textColor : textColors[index] || "white",
+				suffix : suffixes[index] || "",
+				label : numberCard?.attributes?.DisplayName || "",
+				icon : icons[index] || "FieldEmpty"
+			}
+		})	*/
+		const paramNames = Array(30).fill(0);
+		let cards : ITwoOptionsCards[] = paramNames.map((name, index) => {
+			const ctrlName = `boolean${index+1}`
+			return {
+				control:(context.parameters as any)[ ctrlName] as ComponentFramework.PropertyTypes.TwoOptionsProperty, 
+				icons:(context.parameters as any)[`${ctrlName}Icons`].raw ?? "ToggleLeft;ToggleRight"}
+		});
+
+		let params : ITwoOptionsProperties = {						
+			cards,
+			width: 120 // context.parameters.size?.raw ?? 120
+
+		};			
+		ReactDOM.render(React.createElement(TwoOptionsCompositeControl, params ) , this.container);
+	
+	}
+
 
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -20,7 +59,8 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	 */
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
-		// Add control initialization code
+		this.container = container;		
+		this.renderControl(context);
 	}
 
 
@@ -30,7 +70,7 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void
 	{
-		// Add code to update control view
+		this.renderControl(context);
 	}
 
 	/** 
@@ -48,6 +88,6 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	 */
 	public destroy(): void
 	{
-		// Add code to cleanup control if necessary
+		ReactDOM.unmountComponentAtNode(this.container);
 	}
 }
