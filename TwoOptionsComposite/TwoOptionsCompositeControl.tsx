@@ -17,17 +17,24 @@ export interface ITwoOptionsCards{
 export interface ITwoOptionsProperties{
  cards : ITwoOptionsCards[];
  width: number;
+ height: number;
+ showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOTNULL"
 }
 const iconClass = mergeStyles({
-  fontSize: 30,
-  height: 30,
-  width: 50,
+  fontSize: "3em",
   margin: "1px",   
   textAlign: "center"
 });
 
+function shouldShow(value : boolean, showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOTNULL") : boolean {
+  if(showOn==="ALWAYS") return true;
+  if(showOn==="TRUE") return value===true;
+  if(showOn==="FALSE") return value===false;
+  if(showOn==="NOTNULL") return value != null;
+  return true;
+}
 
-export const TwoOptionsCompositeControl = ({cards, width}: ITwoOptionsProperties) : JSX.Element => {
+export const TwoOptionsCompositeControl = ({cards, width, height, showOn}: ITwoOptionsProperties) : JSX.Element => {
     const wrapperTokens : IStackTokens = {
         childrenGap: 10, 
         padding: 10
@@ -40,17 +47,13 @@ export const TwoOptionsCompositeControl = ({cards, width}: ITwoOptionsProperties
     return  <Stack horizontal wrap tokens={wrapperTokens} style={{width:"100%"}} >
     {cards.map((card) =>{
       const color = card.control.attributes?.Options[1]?.Color ?? "green";
-      return  <Stack tokens={{ childrenGap: 2 }} verticalFill={true} style={{width: "200px", height: "100px", alignItems: "center" , border: `1px solid ${color}`}}>
-       <Stack grow><span>{card.control.formatted}123</span></Stack>
+      const isVisible = shouldShow(card.control.raw, showOn);
+      if(!isVisible) return <></>;
+      return  <Stack tokens={{ childrenGap: 2 }} verticalFill={true} style={{width: `${width}px`, height: `${height}px`, alignItems: "center" , border: `1px solid ${color}`}}>
+       <Stack grow><span>{card.control.formatted}</span></Stack>
        <Stack grow><FontIcon iconName={card.icons.split(";")[1]} className={iconClass} style={{color:color}} /></Stack>
        <Stack grow><span style={{fontWeight: "bold"}}>{card.control.attributes?.DisplayName}</span></Stack>
-    </Stack>
-      /* <Stack grow  wrap horizontal horizontalAlign="space-between" tokens={{ childrenGap: 10, padding: 0}}>
-          <FontIcon iconName={card.icons.split(";")[0]} />  
-       </Stack>
-       <Stack grow horizontal horizontalAlign="start" verticalAlign="end" style={{maxHeight: "25%", textAlign: "left"}}>
-           <span style={{fontSize: "1.1em"}} >label</span>
-       </Stack>*/   
+    </Stack>      
     })}
   </Stack>
 }

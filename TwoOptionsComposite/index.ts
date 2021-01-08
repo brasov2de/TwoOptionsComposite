@@ -15,22 +15,6 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	}
 
 	private renderControl(context: ComponentFramework.Context<IInputs>) : void {		
-	/*	const inputs = [context.parameters.input1, context.parameters.input2, context.parameters.input3, context.parameters.input4, context.parameters.input5, context.parameters.input6];
-		const backgroundColors = (context.parameters.backgroundColor?.raw || "").split(";");
-		const textColors = (context.parameters.textColor?.raw || "").split(";");
-		const suffixes = (context.parameters.suffix?.raw || "").split(";");
-		const icons = (context.parameters.icons?.raw || "").split(";");
-
-		const numberCards = inputs.filter((numberCard) => numberCard!=null && numberCard.type!=null).map((numberCard, index) => {
-			return {
-				value : numberCard?.formatted || "",
-				backgroundColor: backgroundColors[index] || "gray",
-				textColor : textColors[index] || "white",
-				suffix : suffixes[index] || "",
-				label : numberCard?.attributes?.DisplayName || "",
-				icon : icons[index] || "FieldEmpty"
-			}
-		})	*/
 		const paramNames = Array(30).fill(0);
 		let cards : ITwoOptionsCards[] = paramNames.map((name, index) => {
 			const ctrlName = `boolean${index+1}`
@@ -41,7 +25,9 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 
 		let params : ITwoOptionsProperties = {						
 			cards,
-			width: 120 // context.parameters.size?.raw ?? 120
+			width: context.parameters.cardWidth?.raw ?? 150,
+			height: context.parameters.cardHeight?.raw ?? 120, 
+			showOn : context.parameters.showOn.raw
 
 		};			
 		ReactDOM.render(React.createElement(TwoOptionsCompositeControl, params ) , this.container);
