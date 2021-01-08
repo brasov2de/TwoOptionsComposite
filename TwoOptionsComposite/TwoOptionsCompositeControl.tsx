@@ -45,13 +45,14 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn}: ITwoO
       };
     
     return  <Stack horizontal wrap tokens={wrapperTokens} style={{width:"100%"}} >
-    {cards.map((card) =>{
-      const color = card.control.attributes?.Options[1]?.Color ?? "green";
-      const isVisible = shouldShow(card.control.raw, showOn);
+    {cards.map((card) =>{      
+      const isVisible = shouldShow(card.control.raw, showOn);      
       if(!isVisible) return <></>;
+      const valueIndex = card.control.raw===true ? 1 : 0;
+      const color = card.control.attributes?.Options[valueIndex]?.Color ?? "black";
       return  <Stack tokens={{ childrenGap: 2 }} verticalFill={true} style={{width: `${width}px`, height: `${height}px`, alignItems: "center" , border: `1px solid ${color}`}}>
        <Stack grow><span>{card.control.formatted}</span></Stack>
-       <Stack grow><FontIcon iconName={card.icons.split(";")[1]} className={iconClass} style={{color:color}} /></Stack>
+       <Stack grow><FontIcon iconName={card.icons.split(";")[valueIndex]} className={iconClass} style={{color:color}} /></Stack>
        <Stack grow><span style={{fontWeight: "bold"}}>{card.control.attributes?.DisplayName}</span></Stack>
     </Stack>      
     })}
