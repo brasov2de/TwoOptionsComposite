@@ -11,6 +11,10 @@ You can choose up to 30 TwoOption attributes, named "Boolean1", "Boolean2" .. "B
 
 ![main](./Docs/imgs/ConfigBooleans.png)
 
+Showing only the "true/yes" values.
+
+![main](./Docs/imgs/TwoOptionsCompositeOnlyTrue.gif)
+
 ### Icons configuration
 
 The icons should be chosed from the FluentUI Icon Gallery (https://uifabricicons.azurewebsites.net/) and be separated by a semicolon ";".
