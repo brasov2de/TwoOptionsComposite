@@ -3,7 +3,7 @@ import {initializeIcons} from "office-ui-fabric-react/lib/Icons"
 import { Icon} from "office-ui-fabric-react/lib/Icon";
 import {Stack, IStackStyles, IStackTokens} from "office-ui-fabric-react/lib/Stack";
 import { mergeStyles, DefaultPalette } from 'office-ui-fabric-react/lib/Styling';
-import { DocumentCard, FontIcon, TextField } from '@fluentui/react';
+import { FontIcon } from '@fluentui/react/lib/Icon';
 
 initializeIcons();
 
