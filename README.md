@@ -1,13 +1,17 @@
 # TwoOptionsComposite
 
 ![main](./Docs/imgs/Main.png)
-This PCF controls makes it easier to work with a bunch of TwoOption (Booleans). It cam include up to 30 TwoOption(s) (boolean) attributes.
-It offers the possibility to automatically hide all the empty attributes. Have a look:
+
+This PCF controls makes it easier to work with a bunch of TwoOptions (Booleans). It can include up to 30 TwoOptions (boolean) attributes.
+It offers the possibility to automatically hide attributes based on the value. Have a look:
+
 ![main](./Docs/imgs/TwoOptionsComposite.gif)
 
 ## Configuration
 
-You can choose up to 30 TwoOption attributes, named "Boolean1", "Boolean2" .. "Boolean30". For each of them there is an additional property "Boolean1Icons".."Boolean30Icons", where you can define the Icons: the one for false (left) and the one for true (right). 
+![main](./Docs/imgs/Config.png)
+
+You can choose up to 30 TwoOption attributes, named "Boolean1", "Boolean2" .. "Boolean30". For each of them there is an additional property "Boolean1Icons".."Boolean30Icons", where you can define the Icons: the one for false/no (left) and the one for true/true (right). 
 
 ![main](./Docs/imgs/ConfigBooleans.png)
 
@@ -21,7 +25,7 @@ There are few coptions for all TwoOption(s): width & height of a card, and the v
 
 ![main](./Docs/imgs/ConfigAllCards.png)
 
-The cards can be automatically be hidden. The options are: show only on value "true", show only on "false", show only when the value is not null (empty), or "allways".
+The cards can be automatically be hidden. The options are: show only on value "true", show only on "false", show only when the value is not null (empty), or "always".
 
 ![main](./Docs/imgs/ConfigShowOn.png)
 
