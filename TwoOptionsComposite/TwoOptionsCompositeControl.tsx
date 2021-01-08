@@ -21,7 +21,7 @@ export interface ITwoOptionsProperties{
  showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOTNULL"
 }
 const iconClass = mergeStyles({
-  fontSize: "3em",
+  fontSize: "2.5em",
   margin: "1px",   
   textAlign: "center"
 });
@@ -50,9 +50,9 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn}: ITwoO
       if(!isVisible) return <></>;
       const valueIndex = card.control.raw===true ? 1 : 0;
       const color = card.control.attributes?.Options[valueIndex]?.Color ?? "black";
-      return  <Stack tokens={{ childrenGap: 2 }} verticalFill={true} style={{width: `${width}px`, height: `${height}px`, alignItems: "center" , border: `1px solid ${color}`}}>
+      return  <Stack key={card.control.attributes?.LogicalName} tokens={{ childrenGap: 2 }} verticalFill={true} style={{width: `${width}px`, height: `${height}px`, alignItems: "center" , border: `1px solid ${color}`}}>
        <Stack grow><span>{card.control.formatted}</span></Stack>
-       <Stack grow><FontIcon iconName={card.icons.split(";")[valueIndex]} className={iconClass} style={{color:color}} /></Stack>
+       <Stack grow><FontIcon iconName={(card.icons??"").split(";")[valueIndex]} className={iconClass} style={{color:color}} /></Stack>
        <Stack grow><span style={{fontWeight: "bold"}}>{card.control.attributes?.DisplayName}</span></Stack>
     </Stack>      
     })}
