@@ -11,7 +11,7 @@
       <external-service-usage enabled="false">
       </external-service-usage>
     -->
-    <external-service-usage enabled="true">
+    <external-service-usage enabled="false">
       <!--UNCOMMENT TO ADD EXTERNAL DOMAINS
       <domain></domain>
       <domain></domain>
@@ -21,12 +21,14 @@
     <property name="boolean1Icons" display-name-key="Boolean1Icons" description-key="Icons for Two Options 1" of-type="SingleLine.Text" usage="input" required="false" default-value="ToggleLeft;ToggleRight"/>
     <property name="cardWidth" display-name-key="CardWidth" description-key="The width of a card" of-type="Whole.None" usage="input" required="false" default-value="150"/>
     <property name="cardHeight" display-name-key="CardHeight" description-key="The height of a card" of-type="Whole.None" usage="input" required="false" default-value="120"/>
-     <property name="showOn" display-name-key="ShowOn" description-key="Show the cards only on value" of-type="Enum" usage="input" required="true">
+    <property name="showOn" display-name-key="ShowOn" description-key="Show the cards only on value" of-type="Enum" usage="input" required="true">
       <value name="ALWAYS" display-name-key="Always" description-key="Always" default="true">ALWAYS</value>
       <value name="TRUE" display-name-key="True" description-key="True">TRUE</value>
       <value name="FALSE" display-name-key="False" description-key="False">FALSE</value>
       <value name="NOTNULL" display-name-key="Not null" description-key="Not null">NOTNULL</value>
     </property>
+    <property name="disabledAttributes" display-name-key="Disabled attribute names" description-key="All the disabled attributes, separated by semicolon" of-type="SingleLine.Text" usage="input" required="false"/>
+    <property name="hiddenAttributes" display-name-key="Hidden attribute names" description-key="All the attributes which should be hidden, separated by semicolon" of-type="SingleLine.Text" usage="input" required="false"/>
     <property name="boolean2" display-name-key="Boolean2" description-key="Two Options 2" of-type="TwoOptions" usage="bound" required="false" />
     <property name="boolean2Icons" display-name-key="Boolean2Icons" description-key="Icons for Two Options 2" of-type="SingleLine.Text" usage="input" required="false" default-value="ToggleLeft;ToggleRight"/>
     <property name="boolean3" display-name-key="Boolean3" description-key="Two Options 3" of-type="TwoOptions" usage="bound" required="false" />

@@ -3,6 +3,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ITwoOptionsCards, ITwoOptionsProperties, TwoOptionsCompositeControl } from "./TwoOptionsCompositeControl";
 
+function isITwoOptionsCards(card : ITwoOptionsCards | null ): card is ITwoOptionsCards {
+	return card != null
+  }
 export class TwoOptionsComposite implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
 	private container: HTMLDivElement;
@@ -15,13 +18,16 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	}
 
 	private renderControl(context: ComponentFramework.Context<IInputs>) : void {		
-		const paramNames = Array(30).fill(0);
+		const paramNames = Array(30).fill(null);
 		let cards : ITwoOptionsCards[] = paramNames.map((name, index) => {
-			const ctrlName = `boolean${index+1}`
+			const ctrlName = `boolean${index+1}`			
+			if((context.parameters as any)[ctrlName]?.type == null){
+				return null;
+			}
 			return {
 				control:(context.parameters as any)[ ctrlName] as ComponentFramework.PropertyTypes.TwoOptionsProperty, 
 				icons:(context.parameters as any)[`${ctrlName}Icons`].raw ?? "ToggleLeft;ToggleRight"}
-		});
+		}).filter(isITwoOptionsCards);
 
 		let params : ITwoOptionsProperties = {						
 			cards,
