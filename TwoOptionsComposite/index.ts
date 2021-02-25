@@ -9,12 +9,20 @@ function isITwoOptionsCards(card : ITwoOptionsCards | null ): card is ITwoOption
 export class TwoOptionsComposite implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
 	private container: HTMLDivElement;
+	private newValue : Object =  {};
+	private notifyOutputChanged : () => void;
+	
 	/**
 	 * Empty constructor.
 	 */
 	constructor()
 	{
 
+	}
+
+	private valueChanged = (newValue: Object) : void => {
+		this.newValue = newValue;
+		this.notifyOutputChanged();
 	}
 
 	private renderControl(context: ComponentFramework.Context<IInputs>) : void {		
@@ -26,6 +34,7 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 			}
 			return {
 				control:(context.parameters as any)[ ctrlName] as ComponentFramework.PropertyTypes.TwoOptionsProperty, 
+				name : ctrlName,
 				icons:(context.parameters as any)[`${ctrlName}Icons`].raw ?? "ToggleLeft;ToggleRight"}
 		}).filter(isITwoOptionsCards);
 
@@ -33,13 +42,14 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 			cards,
 			width: context.parameters.cardWidth?.raw ?? 150,
 			height: context.parameters.cardHeight?.raw ?? 120, 
-			showOn : context.parameters.showOn.raw
+			showOn : context.parameters.showOn.raw, 
+			onValueChanged : this.valueChanged
 
 		};			
 		ReactDOM.render(React.createElement(TwoOptionsCompositeControl, params ) , this.container);
 	
 	}
-
+	
 
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -51,7 +61,8 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	 */
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
-		this.container = container;		
+		this.container = container;				
+		this.notifyOutputChanged = notifyOutputChanged;
 		this.renderControl(context);
 	}
 
@@ -71,7 +82,7 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	 */
 	public getOutputs(): IOutputs
 	{
-		return {};
+		return this.newValue;
 	}
 
 	/** 

@@ -1,30 +1,26 @@
 import * as React from 'react';
 import {initializeIcons} from "office-ui-fabric-react/lib/Icons"
-import { Icon} from "office-ui-fabric-react/lib/Icon";
-import {Stack, IStackStyles, IStackTokens} from "office-ui-fabric-react/lib/Stack";
-import { mergeStyles, DefaultPalette } from 'office-ui-fabric-react/lib/Styling';
-import { FontIcon } from '@fluentui/react/lib/Icon';
+import {Stack, IStackTokens} from "office-ui-fabric-react/lib/Stack";
+
+import { TwoOptionsCard } from './TwoOptionsCard';
 
 initializeIcons();
 
 
 export interface ITwoOptionsCards{
     control : ComponentFramework.PropertyTypes.TwoOptionsProperty;
-    icons: string
-
+    name : string;
+    icons: string    
 }
 
 export interface ITwoOptionsProperties{
  cards : ITwoOptionsCards[];
  width: number;
  height: number;
- showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOTNULL"
+ showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOTNULL";
+ onValueChanged : (newValue:Object) => void;
 }
-const iconClass = mergeStyles({
-  fontSize: "2.5em",
-  margin: "1px",   
-  textAlign: "center"
-});
+
 
 function shouldShow(value : boolean, showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOTNULL") : boolean {
   if(showOn==="ALWAYS") return true;
@@ -34,7 +30,7 @@ function shouldShow(value : boolean, showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOT
   return true;
 }
 
-export const TwoOptionsCompositeControl = ({cards, width, height, showOn}: ITwoOptionsProperties) : JSX.Element => {
+export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValueChanged}: ITwoOptionsProperties) : JSX.Element => {
     const wrapperTokens : IStackTokens = {
         childrenGap: 10, 
         padding: 10
@@ -43,18 +39,17 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn}: ITwoO
         childrenGap: 5,
         padding: 5
       };
+
+    const onCardClick = (newVal:Object)=>{      
+      const newValue = Object.assign(cards.reduce((result, current) => {        
+          return Object.assign(result, {[current.name]: current.control.raw});
+      }, {}), newVal);
+      onValueChanged(newValue);
+    };
     
     return  <Stack horizontal wrap tokens={wrapperTokens} style={{width:"100%"}} >
-    {cards.map((card) =>{      
-      const isVisible = shouldShow(card.control.raw, showOn);      
-      if(!isVisible) return <></>;
-      const valueIndex = card.control.raw===true ? 1 : 0;
-      const color = card.control.attributes?.Options[valueIndex]?.Color ?? "black";
-      return  <Stack key={card.control.attributes?.LogicalName} tokens={{ childrenGap: 2 }} verticalFill={true} style={{width: `${width}px`, height: `${height}px`, alignItems: "center" , border: `1px solid ${color}`}}>
-       <Stack grow><span>{card.control.formatted}</span></Stack>
-       <Stack grow><FontIcon iconName={(card.icons??"").split(";")[valueIndex]} className={iconClass} style={{color:color}} /></Stack>
-       <Stack grow><span style={{fontWeight: "bold"}}>{card.control.attributes?.DisplayName}</span></Stack>
-    </Stack>      
-    })}
+    {cards.map((card) => 
+      <TwoOptionsCard card={card} width={width} height={height} name={card.name} onCardClicked={onCardClick} key={card.name} isVisible ={shouldShow(card.control.raw, showOn)} ></TwoOptionsCard>     
+    )}
   </Stack>
 }
