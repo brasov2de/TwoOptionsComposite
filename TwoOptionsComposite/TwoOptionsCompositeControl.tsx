@@ -19,6 +19,8 @@ export interface ITwoOptionsProperties{
  height: number;
  showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOTNULL";
  onValueChanged : (newValue:Object) => void;
+ isDisabled: boolean;
+ isVisible : boolean;
 }
 
 
@@ -30,7 +32,8 @@ function shouldShow(value : boolean, showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOT
   return true;
 }
 
-export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValueChanged}: ITwoOptionsProperties) : JSX.Element => {
+export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValueChanged, isDisabled, isVisible}: ITwoOptionsProperties) : JSX.Element => {  
+    if(isVisible!==true) return <></>;
     const wrapperTokens : IStackTokens = {
         childrenGap: 10, 
         padding: 10
@@ -41,6 +44,7 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValu
       };
 
     const onCardClick = (newVal:Object)=>{      
+      if(isDisabled===true) return;
       const newValue = Object.assign(cards.reduce((result, current) => {        
           return Object.assign(result, {[current.name]: current.control.raw});
       }, {}), newVal);
