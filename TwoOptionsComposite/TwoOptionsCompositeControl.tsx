@@ -21,6 +21,9 @@ export interface ITwoOptionsProperties{
  onValueChanged : (newValue:Object) => void;
  isDisabled: boolean;
  isVisible : boolean;
+ disabledAttributes : string |null;
+ hiddenAttributes : string | null;
+ 
 }
 
 
@@ -32,7 +35,7 @@ function shouldShow(value : boolean, showOn:  "ALWAYS" | "TRUE" | "FALSE" | "NOT
   return true;
 }
 
-export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValueChanged, isDisabled, isVisible}: ITwoOptionsProperties) : JSX.Element => {  
+export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValueChanged, isDisabled, isVisible, disabledAttributes, hiddenAttributes}: ITwoOptionsProperties) : JSX.Element => {  
     if(isVisible!==true) return <></>;
     const wrapperTokens : IStackTokens = {
         childrenGap: 10, 
@@ -50,10 +53,22 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValu
       }, {}), newVal);
       onValueChanged(newValue);
     };
+
+    const disabledCards : string[]= (disabledAttributes ?? "").split(";");
+    const hiddenCards : string[] = (hiddenAttributes ?? "").split(";");
+
     
     return  <Stack horizontal wrap tokens={wrapperTokens} style={{width:"100%"}} >
     {cards.map((card) => 
-      <TwoOptionsCard card={card} width={width} height={height} name={card.name} onCardClicked={onCardClick} key={card.name} isVisible ={shouldShow(card.control.raw, showOn)} ></TwoOptionsCard>     
+      <TwoOptionsCard 
+          card={card} 
+          width={width} 
+          height={height}        
+          onCardClicked={onCardClick} 
+          key={card.name} 
+          isDisabled ={disabledCards.includes(card.control.attributes?.LogicalName ?? card.name)} 
+          isVisible ={!hiddenCards.includes(card.control.attributes?.LogicalName ?? card.name) && shouldShow(card.control.raw, showOn)} 
+          ></TwoOptionsCard>     
     )}
   </Stack>
 }

@@ -45,7 +45,9 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 			showOn : context.parameters.showOn.raw, 
 			onValueChanged : this.valueChanged, 
 			isDisabled : context.mode.isControlDisabled,
-			isVisible : context.mode.isVisible
+			isVisible : context.mode.isVisible, 
+			disabledAttributes : context.parameters.disabledAttributes.raw,
+			hiddenAttributes : context.parameters.hiddenAttributes.raw
 
 		};			
 		ReactDOM.render(React.createElement(TwoOptionsCompositeControl, params ) , this.container);

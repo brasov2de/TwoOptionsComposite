@@ -5,9 +5,9 @@ import { FontIcon } from '@fluentui/react/lib/Icon';
 import { mergeStyles, DefaultPalette } from 'office-ui-fabric-react/lib/Styling';
 
 export interface ITwoOptionsCardProperties{
-    card : ITwoOptionsCards;
-    name : string;
+    card : ITwoOptionsCards;  
     isVisible: boolean;
+    isDisabled : boolean;
     width: number;
     height: number;
     onCardClicked : (newVale : Object) => void;    
@@ -19,11 +19,12 @@ const iconClass = mergeStyles({
     textAlign: "center"
 }); 
 
-export const TwoOptionsCard = ({card, name, isVisible , width, height, onCardClicked}: ITwoOptionsCardProperties) : JSX.Element => {
+export const TwoOptionsCard = ({card, isVisible , isDisabled, width, height, onCardClicked}: ITwoOptionsCardProperties) : JSX.Element => {
 
     const onClick = React.useCallback(()=> {
-        onCardClicked({[name]: !card.control.raw})
-    }, [onCardClicked]);  
+        if(isDisabled===true) return;
+        onCardClicked({[card.name]: !card.control.raw})
+    }, [onCardClicked, isDisabled]);  
     if(!isVisible) return <></>;
     const valueIndex = card.control.raw===true ? 1 : 0;
     const color = card.control.attributes?.Options[valueIndex]?.Color ?? "black";
