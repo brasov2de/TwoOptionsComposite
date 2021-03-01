@@ -40,8 +40,8 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 
 		let params : ITwoOptionsProperties = {						
 			cards,
-			width: context.parameters.cardWidth?.raw ?? 150,
-			height: context.parameters.cardHeight?.raw ?? 120, 
+			width: context.parameters.cardWidth?.raw ?? 120,
+			height: context.parameters.cardHeight?.raw ?? 100, 
 			showOn : context.parameters.showOn.raw, 
 			onValueChanged : this.valueChanged, 
 			isDisabled : context.mode.isControlDisabled,

@@ -1,0 +1,20 @@
+.Dianamics\.TwoOptionsComposite .Card{ 
+    cursor: pointer;
+}
+
+.Dianamics\.TwoOptionsComposite .Card:hover{
+    box-shadow: 3px 3px 2px gray;
+    opacity: 0.9;
+    transform: scale(1.02);            
+}
+
+.Dianamics\.TwoOptionsComposite .CardDisabled{ 
+    cursor: default;    
+}
+
+.Dianamics\.TwoOptionsComposite .CardDisabled:hover{
+    box-shadow: 3px 3px 2px gray;
+    background-color: lightgray ;
+    opacity: 0.9;
+    transform: scale(1.02);            
+}

@@ -19,8 +19,8 @@
     </external-service-usage>    
     <property name="boolean1" display-name-key="Boolean1" description-key="Two Options 1" of-type="TwoOptions" usage="bound" required="true" />
     <property name="boolean1Icons" display-name-key="Boolean1Icons" description-key="Icons for Two Options 1" of-type="SingleLine.Text" usage="input" required="false" default-value="ToggleLeft;ToggleRight"/>
-    <property name="cardWidth" display-name-key="CardWidth" description-key="The width of a card" of-type="Whole.None" usage="input" required="false" default-value="150"/>
-    <property name="cardHeight" display-name-key="CardHeight" description-key="The height of a card" of-type="Whole.None" usage="input" required="false" default-value="120"/>
+    <property name="cardWidth" display-name-key="CardWidth" description-key="The width of a card" of-type="Whole.None" usage="input" required="false" default-value="120"/>
+    <property name="cardHeight" display-name-key="CardHeight" description-key="The height of a card" of-type="Whole.None" usage="input" required="false" default-value="100"/>
     <property name="showOn" display-name-key="ShowOn" description-key="Show the cards only on value" of-type="Enum" usage="input" required="true">
       <value name="ALWAYS" display-name-key="Always" description-key="Always" default="true">ALWAYS</value>
       <value name="TRUE" display-name-key="True" description-key="True">TRUE</value>
@@ -100,6 +100,7 @@
     -->
     <resources>
       <code path="index.ts" order="1"/>
+       <css path="css/TwoOptionsComposite.css" order="1" />
       <!-- UNCOMMENT TO ADD MORE RESOURCES
       <css path="css/TwoOptionsComposite.css" order="1" />
       <resx path="strings/TwoOptionsComposite.1033.resx" version="1.0.0" />

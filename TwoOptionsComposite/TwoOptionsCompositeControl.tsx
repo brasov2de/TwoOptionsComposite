@@ -55,19 +55,19 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValu
     };
 
     const disabledCards : string[]= (disabledAttributes ?? "").split(";");
-    const hiddenCards : string[] = (hiddenAttributes ?? "").split(";");
-
+    const hiddenCards : string[] = (hiddenAttributes ?? "").split(";");    
     
     return  <Stack horizontal wrap tokens={wrapperTokens} style={{width:"100%"}} >
-    {cards.map((card) => 
+    {cards.filter((card)=>{
+      return !hiddenCards.includes(card.control.attributes?.LogicalName ?? card.name) && shouldShow(card.control.raw, showOn);
+    }).map((card) => 
       <TwoOptionsCard 
           card={card} 
           width={width} 
           height={height}        
           onCardClicked={onCardClick} 
           key={card.name} 
-          isDisabled ={disabledCards.includes(card.control.attributes?.LogicalName ?? card.name)} 
-          isVisible ={!hiddenCards.includes(card.control.attributes?.LogicalName ?? card.name) && shouldShow(card.control.raw, showOn)} 
+          isDisabled ={disabledCards.includes(card.control.attributes?.LogicalName ?? card.name)}           
           ></TwoOptionsCard>     
     )}
   </Stack>
