@@ -18,3 +18,27 @@
     opacity: 0.9;
     transform: scale(1.02);            
 }
+
+
+.Dianamics\.TwoOptionsComposite .ZoomOut {
+    width:23px;
+    height: 100%;
+    cursor: grab;
+    padding-left: 2px;
+    margin-right: 2px;
+    padding-bottom: 2px;;
+    border: 1px solid silver;
+}
+
+.Dianamics\.TwoOptionsComposite .ZoomOut:hover {       
+    background-color: silver;         
+    box-shadow: 3px 3px 2px gray;    
+    opacity: 0.9;          
+}
+
+.Dianamics\.TwoOptionsComposite .CalloutContainer{
+    width: 75%;
+    max-height: 75%;
+    vertical-align: middle;
+
+}

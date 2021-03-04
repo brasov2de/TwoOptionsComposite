@@ -6,9 +6,10 @@ import { mergeStyles, DefaultPalette } from 'office-ui-fabric-react/lib/Styling'
 
 export interface ITwoOptionsCardProperties{
     card : ITwoOptionsCards;      
-    isDisabled : boolean;
+    isDisabled : boolean;  
     width: number;
     height: number;
+    isVisibleBecauseOfZoom : boolean;
     onCardClicked : (newVale : Object) => void;    
    }
 
@@ -21,17 +22,18 @@ const calculateIconStyle=(height: number) : string => {
     });
 }
 
-export const TwoOptionsCard = ({card, isDisabled, width, height, onCardClicked}: ITwoOptionsCardProperties) : JSX.Element => {
+export const TwoOptionsCard = ({card, isDisabled, width, height, isVisibleBecauseOfZoom, onCardClicked}: ITwoOptionsCardProperties) : JSX.Element => {
     const iconClass = calculateIconStyle(height);  
 
     const onClick = React.useCallback(()=> {
         if(isDisabled===true) return;
-        onCardClicked({[card.name]: !card.control.raw})
+        onCardClicked({[card.name]: card.control.raw===true ? false : (card.control.raw==false ? null : true)})
     }, [onCardClicked, isDisabled]);      
     
     const valueIndex = card.control.raw===true ? 1 : 0;
-    const color = card.control.attributes?.Options[valueIndex]?.Color ?? "black";
+    const color = card.control.raw==null ? "#ebebeb" : card.control.attributes?.Options[valueIndex]?.Color ?? "black";
     const iconName = (card.icons??"").split(";")[valueIndex];  
+    const textColor = isVisibleBecauseOfZoom===true ? "silver" : "black";
         
     return  (
         <Stack 
@@ -41,14 +43,14 @@ export const TwoOptionsCard = ({card, isDisabled, width, height, onCardClicked}:
             tokens={{ childrenGap: 2 }} 
             verticalFill={true} 
             style={{width: `${width}px`, height: `${height}px`, border: `1px solid silver`, alignItems: "center"}}>
-            <Stack grow>
+            <Stack grow style={{color: textColor}}>
                 <span>{card.control.formatted}</span>
             </Stack>
             <Stack grow>
                 <FontIcon iconName={iconName} className={iconClass} style={{color:color}} />
             </Stack>
             <Stack grow>
-                <span style={{fontWeight: "bold"}}>{card.control.attributes?.DisplayName}</span>
+                <span style={{fontWeight: "bold", color: textColor}}>{card.control.attributes?.DisplayName}</span>
             </Stack>
         </Stack> 
     )     
