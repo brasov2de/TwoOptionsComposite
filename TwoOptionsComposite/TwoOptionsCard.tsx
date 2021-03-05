@@ -27,7 +27,8 @@ export const TwoOptionsCard = ({card, isDisabled, width, height, isVisibleBecaus
 
     const onClick = React.useCallback(()=> {
         if(isDisabled===true) return;
-        onCardClicked({[card.name]: card.control.raw===true ? false : (card.control.raw==false ? null : true)})
+        //onCardClicked({[card.name]: card.control.raw===true ? false : (card.control.raw==false ? null : true)})
+        onCardClicked({[card.name]: card.control.raw==null ?  true : !card.control.raw })
     }, [onCardClicked, isDisabled]);      
     
     const valueIndex = card.control.raw===true ? 1 : 0;
