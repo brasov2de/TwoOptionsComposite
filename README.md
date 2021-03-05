@@ -5,7 +5,11 @@
 This PCF controls makes it easier to work with a bunch of TwoOptions (Booleans). It can include up to 30 TwoOptions (boolean) attributes.
 It offers the possibility to automatically hide attributes based on the value. Have a look:
 
-![main](./Docs/imgs/TwoOptionsComposite.gif)
+<video width="600" height="400" controls>
+  <source src="/Docs/imgs/TwoOptionsComposite.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 
 ## Configuration
 
