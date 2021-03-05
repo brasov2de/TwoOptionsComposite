@@ -5,7 +5,10 @@
 This PCF controls makes it easier to work with a bunch of TwoOptions (Booleans). It can include up to 30 TwoOptions (boolean) attributes.
 It offers the possibility to automatically hide attributes based on the value. Have a look:
 
-![main](/Docs/imgs/TwoOptionsComposite.mp4)
+![main](/Docs/imgs/TwoOptionsCompositeNew.gif)
+
+View mode in "edit mode", where all controls are shown.
+![main](/Docs/imgs/EditMode.png)
 
 
 ## Configuration
@@ -40,6 +43,14 @@ To configure the colors for each value, you can use the standard customization. 
 ![main](./Docs/imgs/CardColor1.png)
 ![main](./Docs/imgs/CardColor2.png)
 
+## Disabling and hiding cards in the composite control
+
+You can dynamically/statically hide or disable card in the composite control.
+For that use the properties "Disabled attribute names" and "Hidden attribute names". The value should be a string with the name of the corresponding controls, concatenated using semicolon (;)
+
+So it can be a static value, or you can bind to another column from the entity (in that case you can use form scripting or business rules to set the value)
+
+![main](./Docs/imgs/Config_Disabled.png)
 
 
 
