@@ -45,13 +45,17 @@ export const TwoOptionsCard = ({card, isDisabled, width, height, isVisibleBecaus
             verticalFill={true} 
             style={{width: `${width}px`, height: `${height}px`, border: `1px solid silver`, alignItems: "center"}}>
             <Stack grow style={{color: textColor}}>
-                <span>{card.control.formatted}</span>
+                <span className="NoWrap" style={{width:width}}>{card.control.formatted}</span>
             </Stack>
             <Stack grow>
                 <FontIcon iconName={iconName} className={iconClass} style={{color:color}} />
             </Stack>
             <Stack grow>
-                <span style={{fontWeight: "bold", color: textColor}}>{card.control.attributes?.DisplayName}</span>
+                <span 
+                    className="NoWrap"
+                    style={{color: textColor, width: width}}>                        
+                    {card.control.attributes?.DisplayName}
+                </span>
             </Stack>
         </Stack> 
     )     

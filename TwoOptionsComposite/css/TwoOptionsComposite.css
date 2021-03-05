@@ -42,3 +42,10 @@
     vertical-align: middle;
 
 }
+
+.Dianamics\.TwoOptionsComposite .NoWrap{
+text-align: center;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
