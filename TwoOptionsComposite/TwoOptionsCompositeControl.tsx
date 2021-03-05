@@ -49,15 +49,7 @@ const spacingTokens: IStackTokens = {
 
 export const TwoOptionsCompositeControl = React.memo(function TwoOptionsCompositeControlApp({cards, width, height, showOn, onValueChanged, isDisabled, isVisible, disabledAttributes, hiddenAttributes}: ITwoOptionsProperties) : JSX.Element{  
     const [isZoomed, setIsZoomed] = React.useState(false);
-    if(isVisible!==true) return <></>;   
-
-  /*  const onCardClick = React.useCallback((newVal:Object)=>{      
-      if(isDisabled===true) return;
-      const newValue = Object.assign(cards.reduce((result, current) => {        
-          return Object.assign(result, {[current.name]: current.control.raw});
-      }, {}), newVal);
-      onValueChanged(newValue);
-    }, [onValueChanged, isDisabled ]);*/
+    if(isVisible!==true) return <></>;    
 
     const toggleZoomed = ()=>{
       setIsZoomed(!isZoomed);
