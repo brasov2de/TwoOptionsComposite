@@ -22,14 +22,14 @@ const calculateIconStyle=(height: number) : string => {
     });
 }
 
-export const TwoOptionsCard = ({card, isDisabled, width, height, isVisibleBecauseOfZoom, onCardClicked}: ITwoOptionsCardProperties) : JSX.Element => {
+export const TwoOptionsCard = React.memo(function TwoOptionsCardApp({card, isDisabled, width, height, isVisibleBecauseOfZoom, onCardClicked}: ITwoOptionsCardProperties) : JSX.Element{
     const iconClass = calculateIconStyle(height);  
 
     const onClick = React.useCallback(()=> {
         if(isDisabled===true) return;
         //onCardClicked({[card.name]: card.control.raw===true ? false : (card.control.raw==false ? null : true)})
         onCardClicked({[card.name]: card.control.raw==null ?  true : !card.control.raw })
-    }, [onCardClicked, isDisabled]);      
+    }, [card.name, card.control.raw, onCardClicked, isDisabled]);      
     
     const valueIndex = card.control.raw===true ? 1 : 0;
     const color = card.control.raw==null ? "#ebebeb" : card.control.attributes?.Options[valueIndex]?.Color ?? "black";
@@ -59,4 +59,9 @@ export const TwoOptionsCard = ({card, isDisabled, width, height, isVisibleBecaus
             </Stack>
         </Stack> 
     )     
-}
+}, (prevProps, newProps) => {       
+    return prevProps.card.control.raw === newProps.card.control.raw
+        && prevProps.isDisabled=== newProps.isDisabled
+        && prevProps.isVisibleBecauseOfZoom === newProps.isVisibleBecauseOfZoom
+        && prevProps.onCardClicked === newProps.onCardClicked
+});

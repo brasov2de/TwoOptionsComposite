@@ -10,7 +10,7 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 
 	private container: HTMLDivElement;
 	private newValue : Object =  {};
-	private notifyOutputChanged : () => void;
+	private notifyOutputChanged : () => void;	
 	
 	/**
 	 * Empty constructor.
@@ -21,11 +21,11 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 	}
 
 	private valueChanged = (newValue: Object) : void => {
-		this.newValue = newValue;
+		this.newValue =  Object.assign(this.newValue, newValue);        
 		this.notifyOutputChanged();
 	}
 
-	private renderControl(context: ComponentFramework.Context<IInputs>) : void {		
+	private renderControl(context: ComponentFramework.Context<IInputs>) : void {			
 		const paramNames = Array(30).fill(null);
 		let cards : ITwoOptionsCards[] = paramNames.map((name, index) => {
 			const ctrlName = `boolean${index+1}`			
@@ -37,6 +37,10 @@ export class TwoOptionsComposite implements ComponentFramework.StandardControl<I
 				name : ctrlName,
 				icons:(context.parameters as any)[`${ctrlName}Icons`].raw ?? "ToggleLeft;ToggleRight"}
 		}).filter(isITwoOptionsCards);
+
+		this.newValue = cards.reduce((result, current) => {        
+			return Object.assign(result, {[current.name]: current.control.raw});
+		}, {});
 
 		let params : ITwoOptionsProperties = {						
 			cards,

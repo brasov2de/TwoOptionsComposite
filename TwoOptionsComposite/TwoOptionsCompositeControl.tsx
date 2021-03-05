@@ -47,17 +47,17 @@ const spacingTokens: IStackTokens = {
 };
 
 
-export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValueChanged, isDisabled, isVisible, disabledAttributes, hiddenAttributes}: ITwoOptionsProperties) : JSX.Element => {  
+export const TwoOptionsCompositeControl = React.memo(function TwoOptionsCompositeControlApp({cards, width, height, showOn, onValueChanged, isDisabled, isVisible, disabledAttributes, hiddenAttributes}: ITwoOptionsProperties) : JSX.Element{  
     const [isZoomed, setIsZoomed] = React.useState(false);
     if(isVisible!==true) return <></>;   
 
-    const onCardClick = (newVal:Object)=>{      
+  /*  const onCardClick = React.useCallback((newVal:Object)=>{      
       if(isDisabled===true) return;
       const newValue = Object.assign(cards.reduce((result, current) => {        
           return Object.assign(result, {[current.name]: current.control.raw});
       }, {}), newVal);
       onValueChanged(newValue);
-    };
+    }, [onValueChanged, isDisabled ]);*/
 
     const toggleZoomed = ()=>{
       setIsZoomed(!isZoomed);
@@ -76,7 +76,7 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValu
               card={card} 
               width={width} 
               height={height}        
-              onCardClicked={onCardClick} 
+              onCardClicked={onValueChanged} 
               key={card.name} 
               isVisibleBecauseOfZoom = {!shouldShow(card.control.raw, showOn)}
               isDisabled ={disabledCards.includes(card.control.attributes?.LogicalName ?? card.name)}           
@@ -91,4 +91,11 @@ export const TwoOptionsCompositeControl = ({cards, width, height, showOn, onValu
       </Stack>
       );
 
-}
+}, (prevProps, newProps)=> { 
+    return newProps.cards.every((newCard, index) => newCard.control.raw === prevProps.cards[index]?.control.raw )
+    && prevProps.onValueChanged === newProps.onValueChanged
+    && prevProps.isDisabled === newProps.isDisabled
+    && prevProps.isVisible === newProps.isVisible
+    && prevProps.disabledAttributes === newProps.disabledAttributes
+    && prevProps.hiddenAttributes === newProps.hiddenAttributes  
+});
