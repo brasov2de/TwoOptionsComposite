@@ -52,6 +52,8 @@ So it can be a static value, or you can bind to another column from the entity (
 
 ![main](./Docs/imgs/Config_Disabled.png)
 
+## Blog
 
+You can read more about this on my blog post: https://dianabirkelbach.wordpress.com/2021/03/06/twooptionscomposite-the-downside-of-pcf-composite-controls/
 
 
